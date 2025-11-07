@@ -3,9 +3,9 @@ import requests
 API_KEY = "WY2uY+QjetTXRE4JPQbszQ==4gv9qeukzJkNXygX"
 
 
-def load_data():
+def load_data(animal_name):
     """ Loads animal data from an API """
-    url = "https://api.api-ninjas.com/v1/animals?name=fox"
+    url = f"https://api.api-ninjas.com/v1/animals?name={animal_name}"
     headers = {"x-api-key": API_KEY}
     response = requests.get(url, headers=headers)
     response_json = response.json()
@@ -30,7 +30,8 @@ def serialize_animal(animal_obj):
 
 
 def main():
-    animals_data = load_data()
+    animal_name = input("Enter a name of an animal: ")
+    animals_data = load_data(animal_name)
     output = ""
     for animal in animals_data:
         output += serialize_animal(animal)
@@ -42,6 +43,8 @@ def main():
 
     with open("animals.html", "w") as f:
         f.write(data)
+
+    print("Website was successfully generated to the file animals.html.")
 
 
 if __name__ == "__main__":
