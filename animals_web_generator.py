@@ -29,12 +29,27 @@ def serialize_animal(animal_obj):
     return output
 
 
+def get_error_message(animal_name):
+    output = (
+        "<img \n" 
+        "src='https://i.otto.de/i/otto/2146c345-c1dd-5aa9-aa33-e746056be8d0?w=960&h=1279'\n" 
+        "alt='Unicorn'\n"
+        "style=width:300px; border-radius:15px;\n"
+        ">\n"
+        f"<h2>The animal '{animal_name}' doesn't exist!</h2>\n"
+    )
+    return output
+
+
 def main():
     animal_name = input("Enter a name of an animal: ")
     animals_data = load_data(animal_name)
-    output = ""
-    for animal in animals_data:
-        output += serialize_animal(animal)
+    if not animals_data:
+        output = get_error_message(animal_name)
+    else:
+        output = ""
+        for animal in animals_data:
+            output += serialize_animal(animal)
 
     with open("animals_template.html", "r") as f:
         data = f.read()
