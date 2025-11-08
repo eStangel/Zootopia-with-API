@@ -1,15 +1,4 @@
-import requests
-
-API_KEY = "WY2uY+QjetTXRE4JPQbszQ==4gv9qeukzJkNXygX"
-
-
-def load_data(animal_name):
-    """ Loads animal data from an API """
-    url = f"https://api.api-ninjas.com/v1/animals?name={animal_name}"
-    headers = {"x-api-key": API_KEY}
-    response = requests.get(url, headers=headers)
-    response_json = response.json()
-    return response_json
+import data_fetcher
 
 
 def serialize_animal(animal_obj):
@@ -43,7 +32,7 @@ def get_error_message(animal_name):
 
 def main():
     animal_name = input("Enter a name of an animal: ")
-    animals_data = load_data(animal_name)
+    animals_data = data_fetcher.fetch_data(animal_name)
     if not animals_data:
         output = get_error_message(animal_name)
     else:
